@@ -1,0 +1,3 @@
+/mnt/gamessd/Engine/build/CMakeFiles/SFML_Test.dir
+/mnt/gamessd/Engine/build/CMakeFiles/edit_cache.dir
+/mnt/gamessd/Engine/build/CMakeFiles/rebuild_cache.dir

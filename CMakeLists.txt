@@ -65,6 +65,3 @@ if(WIN32 AND SFML_BIN_DIR)
     )
 endif()
 
-# Optional testing support
-include(CTest)
-enable_testing()
