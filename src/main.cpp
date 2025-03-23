@@ -1,5 +1,4 @@
 #include "engine/engine.hpp"
-
 int main()
 {
     Engine* engine = Engine::getEngine();

@@ -10,7 +10,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 option(USE_SYSTEM_SFML "Use system-installed SFML via find_package" ON)
 
 if(USE_SYSTEM_SFML)
-    find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
+    find_package(SFML 3.0 COMPONENTS Graphics Window System REQUIRED)
     message(STATUS "Using system-installed SFML")
 else()
     # Let user provide paths manually via presets or command line
@@ -28,15 +28,20 @@ endif()
 
 # Add your includes
 include_directories(${CMAKE_SOURCE_DIR}/include)
-
+link_directories(${CMAKE_SOURCE_DIR}/src)
 # Automatically grab all .cpp files recursively
-file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
-    ${CMAKE_SOURCE_DIR}/*.cpp
-    ${CMAKE_SOURCE_DIR}/src/*.cpp
+
+file(GLOB SOURCES 
+	src/*.cpp
+	src/engine/*.cpp
+	src/game/components/*.cpp
+	src/game/scenes/*.cpp
 )
 
 # Create executable
+
 add_executable(SFML_Test ${SOURCES})
+
 
 # Link SFML libs
 if(USE_SYSTEM_SFML)
