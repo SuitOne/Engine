@@ -2,6 +2,7 @@
 #include "game/components/sprite.hpp"
 #include "game/components/voronoidiagram.hpp"
 #include "game/components/view.hpp"
+#include "game/components/fpsText.hpp"
 
 #include "engine/engine.hpp"
 #include "engine/renderer.hpp"
@@ -18,6 +19,9 @@ sMainTest::sMainTest(Engine& engine) :
 
     // Create view
     voronoiEntity->addComponent(std::make_shared<View>());
+
+    // Create fps counter
+    voronoiEntity->addComponent(std::make_shared<FPSText>(debugFont));
 }
 
 void sMainTest::tick(){
