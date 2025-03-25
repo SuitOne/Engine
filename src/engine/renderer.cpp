@@ -49,3 +49,7 @@ void Renderer::drawFrame(){
         // Clear drawables
         drawables.clear();
 }
+
+void Renderer::setMainView(sf::View& newMainView){
+    renderWindow.setView(newMainView);
+}
