@@ -13,7 +13,6 @@ void Renderer::addDrawable(std::shared_ptr<sf::Drawable> drawable){
 }
 void Renderer::addDrawable(std::vector<std::shared_ptr<sf::Vertex>> vertices, sf::PrimitiveType primType) {
     prims.push_back(Prim(vertices, primType));
-    std::cout << "?\n";
 }
 
 void Renderer::clearDrawables(){
@@ -48,6 +47,9 @@ void Renderer::drawFrame(){
 
         // Clear drawables
         drawables.clear();
+
+        // Clear primitives
+        prims.clear();
 }
 
 void Renderer::setMainView(sf::View& newMainView){
