@@ -9,6 +9,7 @@
 Scene::Scene(Engine& engine) :
     engine(engine) {
 
+    // THESE NEED TO BE MOVED TO A RESOURCE MANAGER, NOT THE MAIN SCENE CLASS //
     // Load debug font
     std::filesystem::path path = "./arial.ttf";
     debugFont = std::make_shared<sf::Font>();
@@ -16,13 +17,7 @@ Scene::Scene(Engine& engine) :
     {
         std::cout << "SCENE: Failed to load font './arial.ttf'" << std::endl;
     }
-
-    // Create FPS text
-    debugFpsText = std::make_shared<sf::Text>(sf::Text(*debugFont));
-    debugFpsText->setCharacterSize(24);
-    debugFpsText->setFillColor(sf::Color::Red);
-    debugFpsText->setPosition({10,10});
-    debugFpsText->setString(std::to_string(engine.fps));
+    // THESE NEED TO BE MOVED TO A RESOURCE MANAGER, NOT THE MAIN SCENE CLASS //
 }
 
 std::shared_ptr<Entity> Scene::createEntity(bool enabled){
@@ -37,14 +32,6 @@ std::shared_ptr<Entity> Scene::getEntityById(int id){
 }
 
 void Scene::tick(){    
-    // Check for debug input
-    if(engine.eInput->getKeyDown(sf::Keyboard::Scancode::Grave)){
-        bool newDebugMode = !engine.eSceneManager->getSceneDebugMode();
-        engine.eSceneManager->setSceneDebugMode(newDebugMode);
-        std::cout << newDebugMode << "\n";
-        loadedEntities[0]->enabled = newDebugMode;
-    }
-
     // Tick entities
     for(auto entity : loadedEntities){
         if(entity.second->enabled) {
