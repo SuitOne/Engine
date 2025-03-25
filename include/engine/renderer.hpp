@@ -20,6 +20,7 @@ class Renderer{
     public:
         Renderer(sf::RenderWindow& renderWindow);
 
+        void setMainView(sf::View& newMainView);
         void addDrawable(std::shared_ptr<sf::Drawable> drawable);
         void addDrawable(std::vector<std::shared_ptr<sf::Vertex>> vertices, sf::PrimitiveType primType);
         void clearDrawables();
