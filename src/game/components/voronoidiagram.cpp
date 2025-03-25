@@ -11,20 +11,17 @@ using boost::polygon::point_data;
 VoronoiDiagram::VoronoiDiagram(Engine& engineRef) : engine(engineRef){}
 
 void VoronoiDiagram::init(){
-    // Generate random points
-    std::vector<sf::Vector2f> points;
-    std::mt19937 gen(std::random_device{}());
-    std::uniform_real_distribution<float> distX;
-    std::uniform_real_distribution<float> distY;
-
-    for(int i = 0; i < 50; ++i){
-        points.emplace_back(distX(gen) * 1000, distY(gen) * 1000);
-    }
-
-    generate(points);
+    generate(generatePoints(50));
 }
 
 void VoronoiDiagram::tick(){
+    timer += engine.deltaTime.asSeconds();
+
+    if(timer >= 2){
+        generate(generatePoints(50));
+        timer = 0;
+    }
+
     draw();
 }
 
@@ -35,6 +32,8 @@ void VoronoiDiagram::generate(const std::vector<sf::Vector2f>& points){
     for(const auto& p : points) {
         boostPoints.emplace_back(p.x, p.y);
     } 
+    
+    vd.clear();
 
     construct_voronoi(boostPoints.begin(), boostPoints.end(), &vd);
 }
@@ -68,4 +67,18 @@ void VoronoiDiagram::drawEdge(const boost::polygon::voronoi_edge<double> edge) c
     line.push_back(std::make_shared<sf::Vertex>(vert2));
 
     engine.eRenderer->addDrawable(line, sf::PrimitiveType::Lines);
+}
+
+std::vector<sf::Vector2f> VoronoiDiagram::generatePoints(int amount){
+    // Generate random points
+    std::vector<sf::Vector2f> points;
+    std::mt19937 gen(std::random_device{}());
+    std::uniform_real_distribution<float> distX;
+    std::uniform_real_distribution<float> distY;
+
+    for(int i = 0; i < amount; ++i){
+        points.emplace_back(distX(gen) * 1000, distY(gen) * 1000);
+    }
+
+    return points;
 }
