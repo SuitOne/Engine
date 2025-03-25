@@ -18,12 +18,11 @@ Scene::Scene(Engine& engine) :
     }
 
     // Create FPS text
-    // debugFpsText = std::make_shared<sf::Text>(sf::Text(*debugFont));
-    // debugFpsText->setCharacterSize(24);
-    // debugFpsText->setFillColor(sf::Color::Red);
-    // debugFpsText->setPosition({10,10});
-    // debugFpsText->setString(std::to_string(engine.fps));
-    // createEntity(debugFpsText, engine.eSceneManager->getSceneDebugMode());
+    debugFpsText = std::make_shared<sf::Text>(sf::Text(*debugFont));
+    debugFpsText->setCharacterSize(24);
+    debugFpsText->setFillColor(sf::Color::Red);
+    debugFpsText->setPosition({10,10});
+    debugFpsText->setString(std::to_string(engine.fps));
 }
 
 std::shared_ptr<Entity> Scene::createEntity(bool enabled){
@@ -37,10 +36,7 @@ std::shared_ptr<Entity> Scene::getEntityById(int id){
     return loadedEntities[id];
 }
 
-void Scene::tick(){
-    // Set fpsText to current FPS
-    //debugFpsText->setString(std::to_string(engine.fps));
-    
+void Scene::tick(){    
     // Check for debug input
     if(engine.eInput->getKeyDown(sf::Keyboard::Scancode::Grave)){
         bool newDebugMode = !engine.eSceneManager->getSceneDebugMode();
