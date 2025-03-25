@@ -24,8 +24,9 @@ class Scene{
         /// @param enabled If the entity is enabled, dictates if it should be rendered
         std::shared_ptr<Entity> createEntity(bool enabled = true);
 
+        // THESE NEED TO BE MOVED TO A RESOURCE MANAGER, NOT THE MAIN SCENE CLASS //
         std::shared_ptr<sf::Font> debugFont{nullptr}; // The font for debug text, can be used for any other text
-        std::shared_ptr<sf::Text> debugFpsText{nullptr}; // The text that shows current framerate
+        // THESE NEED TO BE MOVED TO A RESOURCE MANAGER, NOT THE MAIN SCENE CLASS //
 
     private:
     uint32_t currentEntityId{0}; // Increments every time an entity is created to provide a unique id
