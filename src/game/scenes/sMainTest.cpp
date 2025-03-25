@@ -1,6 +1,7 @@
 #include "game/scenes/sMainTest.hpp"
 #include "game/components/sprite.hpp"
 #include "game/components/voronoidiagram.hpp"
+#include "game/components/view.hpp"
 
 #include "engine/engine.hpp"
 #include "engine/renderer.hpp"
@@ -14,6 +15,9 @@ sMainTest::sMainTest(Engine& engine) :
     // Create voronoi
     std::shared_ptr<Entity> voronoiEntity = createEntity();
     voronoiEntity->addComponent(std::make_shared<VoronoiDiagram>(engine));
+
+    // Create view
+    voronoiEntity->addComponent(std::make_shared<View>());
 }
 
 void sMainTest::tick(){
