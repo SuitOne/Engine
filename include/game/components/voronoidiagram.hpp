@@ -18,8 +18,11 @@ class VoronoiDiagram : public Component {
     private:
         boost::polygon::voronoi_diagram<double> vd;
         std::vector<sf::Vector2f> inputPoints;
+        float timer {0};
         Engine& engine;
 
         void draw() const;
         void drawEdge(const boost::polygon::voronoi_edge<double> edge) const;
+
+        std::vector<sf::Vector2f> generatePoints(int amount);
 };
