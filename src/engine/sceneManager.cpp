@@ -51,14 +51,6 @@ Scene* SceneManager::getCurrentScene() const {
     return loadedScene.get();
 }
 
-void SceneManager::setSceneDebugMode(bool newVal){
-    sceneDebugMode = newVal;
-}
-
-bool SceneManager::getSceneDebugMode(){
-    return sceneDebugMode;
-}
-
 bool SceneManager::isSceneChangeThisTick(){
     return sceneChangeThisTick;
 }
