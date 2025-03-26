@@ -31,7 +31,8 @@ class VoronoiDiagram : public Component {
         Engine& engine;
 
         void draw() const;
-        void drawEdge(const boost::polygon::voronoi_edge<double> edge) const;
+        void drawEdge(const boost::polygon::voronoi_edge<double>& edge) const;
+        void drawCell(const boost::polygon::voronoi_cell<double>& cell) const;
 
         std::vector<sf::Vector2f> generatePoints(int amount, int range);
 };
