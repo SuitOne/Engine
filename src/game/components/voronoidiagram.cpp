@@ -48,13 +48,55 @@ void VoronoiDiagram::draw() const{
         engine.eRenderer->addRenderCommand(std::make_shared<sf::CircleShape>(shape));
     }
 
-    // Draw edges
-    for(const auto& edge : vd.edges()){
-        drawEdge(edge);
+    for(const auto& cell : vd.cells()){
+        drawCell(cell);
     }
 }
 
-void VoronoiDiagram::drawEdge(const boost::polygon::voronoi_edge<double> edge) const{
+void VoronoiDiagram::drawCell(const boost::polygon::voronoi_cell<double>& cell) const{
+    // Create vector for vertex storage
+    std::vector<const boost::polygon::voronoi_vertex<double>*> vertVect {};
+    std::vector<std::shared_ptr<sf::Vertex>> vectorVector {};
+
+    // Get site point of cell
+    std::size_t index = cell.source_index();
+    auto point = inputPoints[index];
+
+    // Push back the site point
+    vectorVector.push_back(std::make_shared<sf::Vertex>(point));
+
+    // Get first cell edge
+    const boost::polygon::voronoi_edge<double>* edge = 
+        cell.incident_edge();
+
+    // Loop over all cell edges
+    do {
+        // Draw the edge
+        drawEdge(*edge);
+        
+        // Add vertices to vector
+        vertVect.push_back(edge->vertex0());
+        vertVect.push_back(edge->vertex1());
+
+        // Move to next edge
+        edge = edge->next();
+    } while (edge != cell.incident_edge());
+
+    // Convert collected vertices to sf vectors
+    for(const auto& vert : vertVect){
+        if(vert != nullptr){
+            sf::Vector2f newVect = sf::Vector2f(static_cast<float>(vert->x()), static_cast<float>(vert->y()));
+            sf::Vertex newVert = sf::Vertex(newVect, sf::Color::Blue);
+            vectorVector.push_back(std::make_shared<sf::Vertex>(newVert));
+        }
+        
+    }
+
+    // Create primitive
+    engine.eRenderer->addRenderCommand(vectorVector, sf::PrimitiveType::TriangleFan);
+}
+
+void VoronoiDiagram::drawEdge(const boost::polygon::voronoi_edge<double>& edge) const{
     if (edge.is_infinite()) return;
 
     auto v0 = edge.vertex0();
