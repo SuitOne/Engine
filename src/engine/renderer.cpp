@@ -8,48 +8,53 @@
 Renderer::Renderer(sf::RenderWindow& renderWindow)
     : renderWindow(renderWindow){}
 
-void Renderer::addDrawable(std::shared_ptr<sf::Drawable> drawable){
-    drawables.push_back(drawable);
+void Renderer::addRenderCommand(std::shared_ptr<sf::Drawable> drawable, uint16_t layer){
+    renderQueue.push_back(std::make_unique<RenderCommand>(RenderCommand(drawable, layer, currentOrder++)));
 }
-void Renderer::addDrawable(std::vector<std::shared_ptr<sf::Vertex>> vertices, sf::PrimitiveType primType) {
-    prims.push_back(Prim(vertices, primType));
+void Renderer::addRenderCommand(std::vector<std::shared_ptr<sf::Vertex>> vertices, sf::PrimitiveType primType, uint16_t layer) {
+    std::shared_ptr<Prim> pPrim = std::make_shared<Prim>(Prim(vertices, primType));
+    renderQueue.push_back(std::make_unique<RenderCommand>(RenderCommand(pPrim, layer, currentOrder++)));
 }
 
-void Renderer::clearDrawables(){
-    drawables.clear();
+void Renderer::clearRenderQueue(){
+    renderQueue.clear();
 }
 
 void Renderer::drawFrame(){
         // Clear window
         Renderer::renderWindow.clear(sf::Color::Black);
 
-        // Draw drawables
-        for(const auto& drawable : drawables){
-            renderWindow.draw(*drawable);
-        }
-
-        // Draw primitives
-        for(const auto& primitive : prims){
-            std::vector<sf::Vertex> rawVerts;
-            rawVerts.reserve(primitive.verts.size());
-            
-            for(const auto& vertexPtr : primitive.verts) {
-                if (vertexPtr) {
-                    rawVerts.push_back(*vertexPtr);
+        // Sort render queue
+        std::sort(renderQueue.begin(), renderQueue.end());
+        
+        // Draw render commands from render queue
+        for(const auto& renderCommand : renderQueue){
+            if(renderCommand->drawable != nullptr){
+                // Drawables
+                renderWindow.draw(*renderCommand->drawable);
+            } else if(renderCommand->prim != nullptr){
+                // Primitives
+                std::vector<sf::Vertex> rawVerts;
+                rawVerts.reserve(renderCommand->prim->verts.size());
+                
+                for(const auto& vertexPtr : renderCommand->prim->verts) {
+                    if (vertexPtr) {
+                        rawVerts.push_back(*vertexPtr);
+                    }
                 }
-            }
 
-            renderWindow.draw(rawVerts.data(), rawVerts.size(), primitive.primType);
+                renderWindow.draw(rawVerts.data(), rawVerts.size(), renderCommand->prim->primType);
+            } else {
+                // Invalid, catch
+                std::cout << "Invalid RenderCommand passed to Renderer!" << std::endl;
+            }
         }
 
         // End render frame
         renderWindow.display();
 
         // Clear drawables
-        drawables.clear();
-
-        // Clear primitives
-        prims.clear();
+        renderQueue.clear();
 }
 
 void Renderer::setMainView(sf::View& newMainView){
