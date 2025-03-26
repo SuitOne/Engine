@@ -34,7 +34,7 @@ void DebugOverlay::tick() {
     sf::Vector2f viewSize = pEngine->renderWindow.getView().getSize();
     
     fpsText.setPosition(viewCenter + sf::Vector2f{viewSize.x / -2 + 10, viewSize.y / -2 + 10});
-    backdrop.setPosition(viewCenter + sf::Vector2f{viewSize.x / -2 + 10, viewSize.y / -2 + 10});
+    backdrop.setPosition(viewCenter + sf::Vector2f{viewSize.x / -2, viewSize.y / -2});
 
     pEngine->eRenderer->addRenderCommand(std::make_shared<sf::Text>(fpsText), 999);
     pEngine->eRenderer->addRenderCommand(std::make_shared<sf::RectangleShape>(backdrop), 1000);
