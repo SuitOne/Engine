@@ -11,14 +11,14 @@ using boost::polygon::point_data;
 VoronoiDiagram::VoronoiDiagram(Engine& engineRef) : engine(engineRef){}
 
 void VoronoiDiagram::init(){
-    generate(generatePoints(50));
+    generate(generatePoints(50, 2000));
 }
 
 void VoronoiDiagram::tick(){
     timer += engine.deltaTime.asSeconds();
 
     if(timer >= 2){
-        generate(generatePoints(50));
+        generate(generatePoints(100, 2000));
         timer = 0;
     }
 
@@ -69,7 +69,7 @@ void VoronoiDiagram::drawEdge(const boost::polygon::voronoi_edge<double> edge) c
     engine.eRenderer->addDrawable(line, sf::PrimitiveType::Lines);
 }
 
-std::vector<sf::Vector2f> VoronoiDiagram::generatePoints(int amount){
+std::vector<sf::Vector2f> VoronoiDiagram::generatePoints(int amount, int range){
     // Generate random points
     std::vector<sf::Vector2f> points;
     std::mt19937 gen(std::random_device{}());
@@ -77,7 +77,7 @@ std::vector<sf::Vector2f> VoronoiDiagram::generatePoints(int amount){
     std::uniform_real_distribution<float> distY;
 
     for(int i = 0; i < amount; ++i){
-        points.emplace_back(distX(gen) * 1000, distY(gen) * 1000);
+        points.emplace_back(distX(gen) * range, distY(gen) * range);
     }
 
     return points;
