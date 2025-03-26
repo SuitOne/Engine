@@ -14,5 +14,5 @@ void Sprite::init(){
 }
 
 void Sprite::tick(){
-    Engine::getEngine()->eRenderer->addDrawable(drawable);
+    Engine::getEngine()->eRenderer->addRenderCommand(drawable);
 }
