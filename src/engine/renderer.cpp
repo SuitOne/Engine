@@ -25,7 +25,10 @@ void Renderer::drawFrame(){
         Renderer::renderWindow.clear(sf::Color::Black);
 
         // Sort render queue
-        std::sort(renderQueue.begin(), renderQueue.end());
+        std::sort(renderQueue.begin(), renderQueue.end(),
+         [](const std::unique_ptr<RenderCommand>& a, const std::unique_ptr<RenderCommand>& b) {
+            return *a < *b;
+        });
         
         // Draw render commands from render queue
         for(const auto& renderCommand : renderQueue){
@@ -46,7 +49,7 @@ void Renderer::drawFrame(){
                 renderWindow.draw(rawVerts.data(), rawVerts.size(), renderCommand->prim->primType);
             } else {
                 // Invalid, catch
-                std::cout << "Invalid RenderCommand passed to Renderer!" << std::endl;
+                std::cerr << "Invalid RenderCommand passed to Renderer!" << std::endl;
             }
         }
 
