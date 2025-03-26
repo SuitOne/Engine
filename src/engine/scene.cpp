@@ -42,5 +42,5 @@ void Scene::tick(){
 
 void Scene::onSceneUnload(){
     loadedEntities.clear();
-    engine.eRenderer->clearDrawables();
+    engine.eRenderer->clearRenderQueue();
 }
