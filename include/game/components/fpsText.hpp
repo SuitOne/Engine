@@ -4,14 +4,16 @@
 
 class Engine;
 
-class FPSText : public Component {
+class DebugOverlay : public Component {
     public:
-        FPSText(std::shared_ptr<sf::Font> debugFont);
+        DebugOverlay(std::shared_ptr<sf::Font> debugFont);
 
         void init() override;
         void tick() override;
 
     private:
-        sf::Text text;
+        sf::Text fpsText;
+        sf::RectangleShape backdrop;
         Engine* pEngine;
+        bool enabled {false};
 };
