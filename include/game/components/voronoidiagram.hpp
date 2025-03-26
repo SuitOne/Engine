@@ -1,8 +1,17 @@
 #pragma once
 #include <vector>
-#include "boost/polygon/voronoi.hpp"
 #include "sfml_includes.hpp"
 #include "engine/component.hpp"
+
+// Disable the C5055 warning
+#pragma warning(push)
+#pragma warning(disable: 5055)
+#pragma warning(disable: 4244)
+
+#include "boost/polygon/voronoi.hpp"
+
+// Restore the previous warning state
+#pragma warning(pop)
 
 class Engine;
 
