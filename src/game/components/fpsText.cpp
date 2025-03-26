@@ -23,5 +23,5 @@ void FPSText::tick() {
     
     text.setPosition(viewCenter + sf::Vector2f{viewSize.x / -2 + 10, viewSize.y / -2 + 10});
 
-    pEngine->eRenderer->addDrawable(std::make_shared<sf::Text>(text));
+    pEngine->eRenderer->addRenderCommand(std::make_shared<sf::Text>(text));
 }
