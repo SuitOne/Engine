@@ -45,7 +45,7 @@ void VoronoiDiagram::draw() const{
         shape.setFillColor(sf::Color::Red);
         shape.setPosition({p.x - 3.0f, p.y - 3.0f});
 
-        engine.eRenderer->addDrawable(std::make_shared<sf::CircleShape>(shape));
+        engine.eRenderer->addRenderCommand(std::make_shared<sf::CircleShape>(shape));
     }
 
     // Draw edges
@@ -66,7 +66,7 @@ void VoronoiDiagram::drawEdge(const boost::polygon::voronoi_edge<double> edge) c
     line.push_back(std::make_shared<sf::Vertex>(vert1));
     line.push_back(std::make_shared<sf::Vertex>(vert2));
 
-    engine.eRenderer->addDrawable(line, sf::PrimitiveType::Lines);
+    engine.eRenderer->addRenderCommand(line, sf::PrimitiveType::Lines);
 }
 
 std::vector<sf::Vector2f> VoronoiDiagram::generatePoints(int amount, int range){
