@@ -61,8 +61,12 @@ void VoronoiDiagram::drawEdge(const boost::polygon::voronoi_edge<double> edge) c
     auto v1 = edge.vertex1();
 
     std::vector<std::shared_ptr<sf::Vertex>> line{};
-    sf::Vertex vert1 = sf::Vertex(sf::Vector2f(v0->x(), v0->y()), sf::Color::White);
-    sf::Vertex vert2 = sf::Vertex(sf::Vector2f(v1->x(), v1->y()), sf::Color::White);
+    
+    sf::Vertex vert1 = sf::Vertex(
+        sf::Vector2f(static_cast<float>(v0->x()), static_cast<float>(v0->y())), sf::Color::White);
+    sf::Vertex vert2 = sf::Vertex(
+        sf::Vector2f(static_cast<float>(v1->x()), static_cast<float>(v1->y())), sf::Color::White);
+
     line.push_back(std::make_shared<sf::Vertex>(vert1));
     line.push_back(std::make_shared<sf::Vertex>(vert2));
 
