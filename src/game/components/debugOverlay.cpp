@@ -9,14 +9,13 @@ fpsText(sf::Text(*debugFont, "", 24)),
 backdrop({150.f, 100.f}) {
 
     fpsText.setFillColor(sf::Color::Red);
-
     backdrop.setFillColor(sf::Color(1, 1, 1, 128));
 
     pEngine = Engine::getEngine();
 }
 
 void DebugOverlay::init() {
-
+    defaultViewSize = pEngine->renderWindow.getDefaultView().getSize();
 }
 
 void DebugOverlay::tick() {
@@ -32,9 +31,15 @@ void DebugOverlay::tick() {
 
     sf::Vector2f viewCenter = pEngine->renderWindow.getView().getCenter();
     sf::Vector2f viewSize = pEngine->renderWindow.getView().getSize();
+    sf::Vector2f viewZoom = sf::Vector2f(viewSize.x / defaultViewSize.x, viewSize.y / defaultViewSize.y);
     
-    fpsText.setPosition(viewCenter + sf::Vector2f{viewSize.x / -2 + 10, viewSize.y / -2 + 10});
-    backdrop.setPosition(viewCenter + sf::Vector2f{viewSize.x / -2, viewSize.y / -2});
+    fpsText.setPosition(viewCenter + 
+        sf::Vector2f{viewSize.x / -2 + 10 * viewZoom.x, viewSize.y / -2 + 10 * viewZoom.y});
+    backdrop.setPosition(viewCenter + 
+        sf::Vector2f{viewSize.x / -2, viewSize.y / -2});
+
+    fpsText.setScale(viewZoom);
+    backdrop.setScale(viewZoom);
 
     pEngine->eRenderer->addRenderCommand(std::make_shared<sf::Text>(fpsText), 999);
     pEngine->eRenderer->addRenderCommand(std::make_shared<sf::RectangleShape>(backdrop), 1000);
