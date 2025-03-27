@@ -1,35 +1,14 @@
-# Prerequisites
-*.d
+# Ignore all
+*
 
-#CMake Presets
-CMakeUserPresets.json
+# Unignore directories
+!*/
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# Unignore source code files
+!src/**/*.cpp
+!src/**/*.hpp
+!include/**/*.hpp
+!include/**/*.h
 
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+!readme.md
+!.gitignore
