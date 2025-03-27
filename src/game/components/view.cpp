@@ -4,8 +4,8 @@
 #include "engine/renderer.hpp"
 
 void View::init(){
-    mainView = sf::View({0.f, 0.f}, {1280.f, 720.f});
     engine = Engine::getEngine();
+    mainView = sf::View({0.f, 0.f}, engine->renderWindow.getDefaultView().getSize());
 
     engine->eRenderer->setMainView(mainView);
 }
