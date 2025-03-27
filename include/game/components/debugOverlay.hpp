@@ -15,5 +15,7 @@ class DebugOverlay : public Component {
         sf::Text fpsText;
         sf::RectangleShape backdrop;
         Engine* pEngine;
+        sf::Vector2f defaultViewSize;
+
         bool enabled {false};
 };
