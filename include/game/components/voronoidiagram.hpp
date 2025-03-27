@@ -31,8 +31,11 @@ class VoronoiDiagram : public Component {
         Engine& engine;
 
         void draw() const;
-        void drawEdge(const boost::polygon::voronoi_edge<double>& edge) const;
+        void drawEdge(const boost::polygon::voronoi_edge<double>& edge, const sf::Color& color = sf::Color::White) const;
+        void drawEdge(const sf::Vector2f& v0, const sf::Vector2f& v1, const sf::Color& color = sf::Color::White) const;
         void drawCell(const boost::polygon::voronoi_cell<double>& cell) const;
 
-        std::vector<sf::Vector2f> generatePoints(int amount, int range);
+        sf::Vector2f boundingBox; // Consider implementing floatrect
+
+        std::vector<sf::Vector2f> generatePoints(int amount, float range);
 };
